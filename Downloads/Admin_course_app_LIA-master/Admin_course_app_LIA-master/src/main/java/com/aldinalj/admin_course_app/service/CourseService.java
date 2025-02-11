@@ -17,14 +17,6 @@ public class CourseService {
         this.courseRepository = courseRepository;
     }
 
-    public List<Course> getAllCourses() {
-        return courseRepository.findAll();
-    }
-
-    public Optional<Course> getCourseById(Integer id) {
-        return courseRepository.findById(id);
-    }
-
     @Transactional
     public Course createOrUpdateCourse(Course course) {
         if (course.getId() == null) {

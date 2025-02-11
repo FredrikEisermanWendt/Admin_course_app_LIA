@@ -18,17 +18,6 @@ public class CourseController {
         this.courseService = courseService;
     }
 
-    @GetMapping
-    public List<Course> getAllCourses() {
-        return courseService.getAllCourses();
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<Course> getCourseById(@PathVariable Integer id) {
-        Optional<Course> course = courseService.getCourseById(id);
-        return course.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
-    }
-
     @PostMapping
     public ResponseEntity<?> createOrUpdateCourse(@RequestBody @Valid Course course) {
         try {
