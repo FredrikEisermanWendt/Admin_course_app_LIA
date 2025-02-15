@@ -25,9 +25,7 @@ public class CourseService {
                 throw new IllegalArgumentException("Start date cannot be in the past for a new course.");
             }
         }
+
         return courseRepository.save(course);
-    }
-    public void deleteCourse(Integer id) {
-        courseRepository.deleteById(id);
     }
 }
