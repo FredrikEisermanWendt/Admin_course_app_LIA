@@ -1,5 +1,6 @@
 package com.aldinalj.admin_course_app.controller;
 import com.aldinalj.admin_course_app.model.Course;
+import com.aldinalj.admin_course_app.repository.CourseRepository;
 import com.aldinalj.admin_course_app.service.CourseService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -9,9 +10,11 @@ import java.util.Optional;
 @RequestMapping("/api/courses")
 public class CourseController {
     private final CourseService courseService;
+    private final CourseRepository courseRepository;
 
-    public CourseController(CourseService courseService) {
+    public CourseController(CourseService courseService, CourseRepository courseRepository) {
         this.courseService = courseService;
+        this.courseRepository = courseRepository;
     }
 
     @PostMapping
@@ -41,6 +44,21 @@ public class CourseController {
         courseService.createOrUpdateCourse(existingCourse);
 
         return ResponseEntity.status(200).body("Course updated successfully.");
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteCourse(@PathVariable Integer id) {
+        try {
+            if (courseRepository.existsById(id)) {
+                courseRepository.deleteById(id);
+                return ResponseEntity.status(200).body("Course deleted successfully.");
+            } else {
+                return ResponseEntity.status(404).body("Course not found.");
+            }
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body("Error: " + e.getMessage());
+        }
+
     }
 
 }
