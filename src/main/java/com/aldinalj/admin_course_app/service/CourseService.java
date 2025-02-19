@@ -18,6 +18,7 @@ public class CourseService {
     public Optional<Course> getCourseById(Integer id) {
         return courseRepository.findById(id);
     }
+
     @Transactional
     public Course createOrUpdateCourse(Course course) {
         if (course.getId() == null) {
