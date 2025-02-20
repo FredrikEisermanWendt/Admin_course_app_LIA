@@ -2,10 +2,12 @@ package com.aldinalj.admin_course_app.controller;
 import com.aldinalj.admin_course_app.model.Course;
 import com.aldinalj.admin_course_app.repository.CourseRepository;
 import com.aldinalj.admin_course_app.service.CourseService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
+
 @RestController
 @RequestMapping("/api/courses")
 public class CourseController {
@@ -17,6 +19,7 @@ public class CourseController {
         this.courseRepository = courseRepository;
     }
 
+    @Operation(summary = "Create course")
     @PostMapping
     public ResponseEntity<?> createOrUpdateCourse(@RequestBody @Valid Course course) {
         try {
@@ -27,6 +30,7 @@ public class CourseController {
         }
     }
 
+    @Operation(summary = "Update existing course in database")
     @PutMapping("/{id}")
     public ResponseEntity<String> updateCourse(@PathVariable Integer id, @RequestBody Course updatedCourse) {
 
@@ -46,6 +50,7 @@ public class CourseController {
         return ResponseEntity.status(200).body("Course updated successfully.");
     }
 
+    @Operation(summary = "Deletes course from database")
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteCourse(@PathVariable Integer id) {
         try {
@@ -58,7 +63,6 @@ public class CourseController {
         }catch (Exception e){
             return ResponseEntity.badRequest().body("Error: " + e.getMessage());
         }
-
     }
 
 }
